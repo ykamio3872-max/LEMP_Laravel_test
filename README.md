@@ -17,7 +17,7 @@ Dockerを使用して構築したLEMP環境（Nginx, MySQL, PHP-FPM）上で、L
 ## ３．セットアップ手順
 以下の手順を実行することで、ローカル環境にLaravelを立ち上げます。
 
-1. リポジトリのクローン
+1. リポジトリのクローン\
 ```
 $ git clone https://www.github.com/ykamio3872-max/LEMP_Laravel_test.git
 $ cd LEMP_Laravel_test
@@ -30,14 +30,14 @@ $ cd LEMP_Laravel_test
 
     **重要**:ルートの`.env`と`src/.env`内の`DB_DATABASE`,`DB_USERNAME`,`DB_PASSWORD`の値は必ず一致させてください。
 
-3. コンテナの起動と自動インストール
+3. コンテナの起動と自動インストール\
 以下のコマンドを実行すると、コンテナのビルドと同時に`entrypoint.sh`が走り、`src`内に`Laravel`が自動インストールされます。
 
 ```
 $ docker compose up -d --build
 ```
 
-4. データベースのマイグレーション
+4. データベースのマイグレーション\
 コンテナが起動し、インストールが完了したら（`$docker compose logs -f app` で進捗確認可能）、以下のコマンドでテーブルを作成します。
 
 ```
