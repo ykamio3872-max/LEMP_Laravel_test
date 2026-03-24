@@ -17,7 +17,7 @@ Dockerを使用して構築したLEMP環境（Nginx, MySQL, PHP-FPM）上で、L
 ## ３．セットアップ手順
 以下の手順を実行することで、ローカル環境にLaravelを立ち上げます。
 
-1. リポジトリのクローン\
+1. リポジトリのクローン
 ```
 $ git clone https://www.github.com/ykamio3872-max/LEMP_Laravel_test.git
 $ cd LEMP_Laravel_test
@@ -26,7 +26,7 @@ $ cd LEMP_Laravel_test
 本プロジェクトには、ルート直下とsrc内の2箇所に`.env`が必要です。
 
     1. **Docker用の設定**: ルート直下の`.env.example`を`.env`にコピーし、必要に応じてDB名などを編集します。
-    2. **Laravel用の設定**:**コンテナ起動後**、`src`ディレクトリ内に生成された`.env.example`の名前を`.env`に変更します。
+    2. **Laravel用の設定**:**コンテナ起動後**、`src`ディレクトリ内に生成された`.env.example`の名前を`.env`に変更します(後述)。
 
     **重要**:ルートの`.env`と`src/.env`内の`DB_DATABASE`,`DB_USERNAME`,`DB_PASSWORD`の値は必ず一致させてください。
 
@@ -36,8 +36,11 @@ $ cd LEMP_Laravel_test
 ```
 $ docker compose up -d --build
 ```
+4. Laravel用環境変数の設定\
+コンテナ起動後、ホストの`src`ディレクトリ内に生成された`.env`ファイルの環境変数を設定します。\
+ルートの`.env`に設定した`DB_DATABASE`、`DB_USERNAME`、`DB_PASSWORD`と同じ値を設定してください。
 
-4. データベースのマイグレーション\
+5. データベースのマイグレーション\
 コンテナが起動し、インストールが完了したら（`$docker compose logs -f app` で進捗確認可能）、以下のコマンドでテーブルを作成します。
 
 ```
