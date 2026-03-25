@@ -46,6 +46,16 @@ $ docker compose up -d --build
 4. Laravel用環境変数の設定\
 コンテナ起動後、ホストの`src`ディレクトリ内に生成された`.env`ファイルの環境変数を設定します。\
 ルートの`.env`に設定した`DB_DATABASE`、`DB_USERNAME`、`DB_PASSWORD`と同じ値を設定してください。
+(追記)Localstack+AWSの導入に伴い、以下の値も設定をしてください。ない項目は手動で入力します。
+
+```
+AWS_ACCESS_KEY_ID=test
+AWS_SECRET_ACCESS_KEY=test
+AWS_DEFAULT_REGION=ap-northeast-1
+AWS_BUCKET=my-test-bucket
+AWS_ENDPOINT=http://aws:4566
+AWS_USE_PATH_STYLE_ENDPOINT=true
+```
 
 5. データベースのマイグレーション\
 コンテナが起動し、インストールが完了したら（`$docker compose logs -f app` で進捗確認可能）、以下のコマンドでテーブルを作成します。
@@ -54,13 +64,44 @@ $ docker compose up -d --build
 $ docker compose exec app php artisan migrate
 ```
 
+6. ライブラリのインストール（重要：バージョン固定）
+Laravel 8の場合、最新版を導入すると`ReadInterface not found`エラーが出るため、必ずバージョン**1.x**を指定する。
+
+```
+# vendorがない場合
+docker-compose exec app composer install
+
+# S3用アダプターの追加
+docker-compose exec app composer require league/flysystem-aws-s3-v3:"~1.0"
+```
+
+7. 権限の修正
+`StreamHandler`エラー（ログ書き込み失敗）を防ぐため実行
+
+```
+docker-compose exec app chmod -R 777 storage bootstrap/cache
+```
+
+8. Localstackの初期化
+現状では、コンテナ起動のたびにバケットを手動作成する必要がある(自動化予定)。
+
+```
+# バケット作成
+docker-compose exec app curl -X PUT http://aws:4566/my-test-bucket
+
+# 作成確認(XMLが返ればOK)
+docker-compose exec app curl http://aws:4566/my-test-bucket
+```
+
+
 ## 4. 動作確認
-* ・**Webサイト**:`http://localhost:8081`(環境によりポートは異なります)
-* ・**MYSQL直接接続**:
+* **Webサイト**:`http://localhost:8081`(環境によりポートは異なります)
+* **MYSQL直接接続**:
     ```
     $ docker compose exec db mysql -u root -p
     ```
     パスワードは`.env`で指定した`DB_ROOT_PASSWORD`が必要です。
+* **AWS動作確認**: http://localhost:8081/s3-upload-test
 
 ## 5. トラブルシューティング・注意事項
 
@@ -82,5 +123,6 @@ $ docker compose exec app php artisan migrate
 * ・**Framework**: Laravel 8.x
 
 ## 7. 更新履歴
+* **2026-03-25**: Localstack+AWS環境を試験的に実装。
 * **2026-03-24**: `README.md`作成、クローンテストに成功。
 * **2026-03-23**: リポジトリ作成
