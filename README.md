@@ -45,7 +45,7 @@ $ docker compose up -d --build
 ```
 4. Laravel用環境変数の設定\
 コンテナ起動後、ホストの`src`ディレクトリ内に生成された`.env`ファイルの環境変数を設定します。\
-ルートの`.env`に設定した`DB_DATABASE`、`DB_USERNAME`、`DB_PASSWORD`と同じ値を設定してください。
+ルートの`.env`に設定した`DB_DATABASE`、`DB_USERNAME`、`DB_PASSWORD`と同じ値を設定してください。\
 (追記)Localstack+AWSの導入に伴い、以下の値も設定をしてください。ない項目は手動で入力します。
 
 ```
