@@ -93,6 +93,8 @@ docker-compose exec app curl -X PUT http://aws:4566/my-test-bucket
 docker-compose exec app curl http://aws:4566/my-test-bucket
 ```
 
+9. 動作確認用ページの編集\
+ルートディレクトリにある`web.php`のコードを、`src/routes/web.php`にコピーしてください。
 
 ## 4. 動作確認
 * **Webサイト**:`http://localhost:8081`(環境によりポートは異なります)
@@ -101,7 +103,8 @@ docker-compose exec app curl http://aws:4566/my-test-bucket
     $ docker compose exec db mysql -u root -p
     ```
     パスワードは`.env`で指定した`DB_ROOT_PASSWORD`が必要です。
-* **AWS動作確認**: http://localhost:8081/s3-upload-test
+* **AWS動作確認**: http://localhost:8081/s3-upload-test \
+    バケット作成に成功しているとjson形式で情報が表示されます。
 
 ## 5. トラブルシューティング・注意事項
 

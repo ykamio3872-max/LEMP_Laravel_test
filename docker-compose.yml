@@ -50,19 +50,14 @@ services:
     ports:
       - 4566:4566
     environment:
-      - SERVICES=${LOCALSTACK_SERVICES}
-      - DEFAULT_REGION=${AWS_DEFAULT_REGION}
-      - DEBUG=1
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      SERVICES: ${LOCALSTACK_SERVICES}
+      DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      DEBUG: "1"
+      DOCKER_HOST: unix:///var/run/docker.sock
+      LOCALSTACK_ACKNOWLEDGE_ACCOUNT_REQUIREMENT: "1"
     volumes:
       - "./docker/aws:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-    networks:
-      - default 
-
-networks:
-  default:
-    driver: bridge
 
 volumes:
   mysql-volume:
