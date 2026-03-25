@@ -26,7 +26,14 @@ $ cd LEMP_Laravel_test
 本プロジェクトには、ルート直下とsrc内の2箇所に`.env`が必要です。
 
     1. **Docker用の設定**: ルート直下の`.env.example`を`.env`にコピーし、必要に応じてDB名などを編集します。
-    2. **Laravel用の設定**:**コンテナ起動後**、`src`ディレクトリ内に生成された`.env.example`の名前を`.env`に変更します(後述)。
+    2. **Laravel用の設定**:**コンテナ起動後**、`src`ディレクトリ内に生成された`.env`の環境変数値を変更します。
+       
+       |項目(key)|値(value)|
+       | :--- | :--- |
+       |DB_HOST|=db|
+       |DB_DATABASE|=(ルートの`.env`と同じ値)|
+       |DB_USER|=(ルートの`.env`と同じ値)|
+       |DB_PASSWORD|=(ルートの`.rnv`と同じ値)|
 
     **重要**:ルートの`.env`と`src/.env`内の`DB_DATABASE`,`DB_USERNAME`,`DB_PASSWORD`の値は必ず一致させてください。
 
