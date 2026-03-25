@@ -64,7 +64,7 @@ AWS_USE_PATH_STYLE_ENDPOINT=true
 $ docker compose exec app php artisan migrate
 ```
 
-6. ライブラリのインストール（重要：バージョン固定）
+6. ライブラリのインストール（重要：バージョン固定）\
 Laravel 8の場合、最新版を導入すると`ReadInterface not found`エラーが出るため、必ずバージョン**1.x**を指定する。
 
 ```
@@ -75,14 +75,14 @@ docker-compose exec app composer install
 docker-compose exec app composer require league/flysystem-aws-s3-v3:"~1.0"
 ```
 
-7. 権限の修正
+7. 権限の修正\
 `StreamHandler`エラー（ログ書き込み失敗）を防ぐため実行
 
 ```
 docker-compose exec app chmod -R 777 storage bootstrap/cache
 ```
 
-8. Localstackの初期化
+8. Localstackの初期化\
 現状では、コンテナ起動のたびにバケットを手動作成する必要がある(自動化予定)。
 
 ```
