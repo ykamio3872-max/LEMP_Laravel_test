@@ -55,6 +55,7 @@ AWS_DEFAULT_REGION=ap-northeast-1
 AWS_BUCKET=my-test-bucket
 AWS_ENDPOINT=http://aws:4566
 AWS_USE_PATH_STYLE_ENDPOINT=true
+AWS_URL=http://localhost:4566/my-test-bucket
 ```
 
 5. データベースのマイグレーション\
@@ -94,7 +95,8 @@ docker-compose exec app curl http://aws:4566/my-test-bucket
 ```
 
 9. 動作確認用ページの編集\
-ルートディレクトリにある`web.php`のコードを、`src/routes/web.php`にコピーしてください。
+ルートディレクトリにある`web.php.example`のコードを、`src/routes/web.php`にコピーしてください。\
+同様に、`welcome.blade.php.example`のコードを、`src/resources/views/welcome.blade.php`にコピーしてください。
 
 ## 4. 動作確認
 * **Webサイト**:`http://localhost:8081`(環境によりポートは異なります)
