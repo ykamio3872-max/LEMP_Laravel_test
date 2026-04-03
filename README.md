@@ -126,8 +126,10 @@ docker-compose exec app curl http://aws:4566/my-test-bucket
 * ・**Infrastructure**: Docker Compose
 * ・**Server**: Nginx(Web), PHP 8.1-fpm(App), MySQL 8.0(DB)
 * ・**Framework**: Laravel 8.x
+* ・**LocalStack**: LocalStack 3.4.0
 
 ## 7. 更新履歴
+* **2026-04-03**: LocalStackのバージョン固定/画像アップロード・削除機能実装
 * **2026-03-25**: Localstack+AWS環境を試験的に実装。
 * **2026-03-24**: `README.md`作成、クローンテストに成功。
 * **2026-03-23**: リポジトリ作成

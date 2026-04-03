@@ -1,24 +1,21 @@
 services:
-  app:    ##  サービス名
+  app:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile 
     environment:
-      # .envから読み込んだ値をLaravelへ渡す
       DB_HOST: db
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      # AWS関連の環境変数
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
       AWS_ENDPOINT: ${AWS_ENDPOINT}
-      
     volumes:
        - ./src/:/var/www/html
   
-  web:    ##  サービス名
+  web:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile 
@@ -29,7 +26,7 @@ services:
     volumes:
       - ./src/:/var/www/html
 
-  db:   ##  サービス名
+  db:
     build:
       context: .
       dockerfile: ./docker/db/Dockerfile
@@ -45,19 +42,19 @@ services:
       - mysql-volume:/var/lib/mysql
 
   aws:
-    image: localstack/localstack:latest
+    image: localstack/localstack:3.4.0
     container_name: localstack_main
     ports:
-      - 4566:4566
+      - "4566:4566"
     environment:
-      SERVICES: ${LOCALSTACK_SERVICES}
-      DEFAULT_REGION: ${AWS_DEFAULT_REGION}
-      DEBUG: "1"
-      DOCKER_HOST: unix:///var/run/docker.sock
-      LOCALSTACK_ACKNOWLEDGE_ACCOUNT_REQUIREMENT: "1"
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LOCALSTACK_ACKNOWLEDGE_ACCOUNT_REQUIREMENT=1
     volumes:
-      - "./docker/aws:/var/lib/localstack"
+      - localstack-data:/var/lib/localstack
       - "/var/run/docker.sock:/var/run/docker.sock"
 
+# --- ここが重要です ---
 volumes:
   mysql-volume:
+  localstack-data:  # ここに名前を追加することで、undefined エラーが消えます
