@@ -46,9 +46,14 @@ AWS_URL=http://localhost:4566/my-test-bucket
 3. コンテナの起動と自動インストール\
 ディレクトリのルートで以下のコマンドを実行してください。
 
-```
+```bash
 $ chmod +x setup.sh
 $ ./setup.sh
+```
+powershellを使用する場合は、以下のコマンドを実行してください。
+
+```powershell
+$ sh setup.sh
 ```
 
 ## 4. 動作確認
