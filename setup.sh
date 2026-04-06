@@ -14,7 +14,7 @@ docker compose up -d
 # src/artisan が出現するまでループで待機します（最大60秒）
 # --- 修正版：3. Laravelのインストール完了（vendor含む）を待機 ---
 echo "Waiting for Laravel and dependencies (vendor) to be fully installed..."
-echo "This takes time on CF-MX5. Please wait (Max 10 mins)..."
+echo "This takes time on some environments. Please wait (Max 10 mins)..."
 
 seconds=0
 # 待機条件を vendor/autoload.php の存在に変更
