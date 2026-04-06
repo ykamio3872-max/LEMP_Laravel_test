@@ -55,6 +55,13 @@
             @else
                 <p style="color: #a0aec0;">画像がアップロードされていません。</p>
             @endif
+
+            <h3>保存済み画像一覧（DB）</h3>
+            <ul>
+                @foreach($images as $image)
+                    <li>{{ $image->file_name }} (Path: {{ $image->s3_path }})</li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </body>
