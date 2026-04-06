@@ -54,7 +54,7 @@ services:
       - localstack-data:/var/lib/localstack
       - "/var/run/docker.sock:/var/run/docker.sock"
 
-# --- ここが重要です ---
+# 名前つきボリュームの定義。上で使用しているものをホストにマウント
 volumes:
   mysql-volume:
-  localstack-data:  # ここに名前を追加することで、undefined エラーが消えます
+  localstack-data:  
