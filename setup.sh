@@ -1,75 +1,71 @@
 #!/bin/bash
 
-# 1. ルートの .env 作成（未作成の場合のみ）
+# 1. ルートの .env 作成
 if [ ! -f .env ]; then
-    echo "Creating root .env from .env.example..."
     cp .env.example .env
 fi
 
-# 2. コンテナの起動
-echo "Starting Docker containers..."
-docker compose up -d
+# 2. コンテナ起動
+docker compose up -d 
 
-# 3. Laravelのインストール待ち
-# src/artisan が出現するまでループで待機します（最大60秒）
-# --- 修正版：3. Laravelのインストール完了（vendor含む）を待機 ---
-echo "Waiting for Laravel and dependencies (vendor) to be fully installed..."
-echo "This takes time on some environments. Please wait (Max 10 mins)..."
-
+# 3. Laravelインストール待機
+echo "Waiting for Laravel dependencies..."
 seconds=0
-# 待機条件を vendor/autoload.php の存在に変更
 while [ ! -f src/vendor/autoload.php ] && [ $seconds -lt 600 ]; do
     sleep 5
     seconds=$((seconds + 5))
-    echo -n "Installing... (${seconds}s) "
-
-    # 1分（60秒）ごとに改行して見やすくする
-    if [ $((seconds % 60)) -eq 0 ]; then echo ""; fi
+    echo -n "."
 done
-echo -e "\nLaravel dependencies detected!"
+echo -e "\nLaravel detected!"
 
-if [ ! -f src/vendor/autoload.php ]; then
-    echo "Error: Installation timed out. 'vendor/autoload.php' not found."
-    echo "Try running: docker compose logs app"
-    exit 1
-fi
-
-# flysystemのインストール
-echo "Installing S3 adapter (Flysystem AWS S3)..."
+# 4. S3ライブラリ追加インストール
+echo "Installing S3 adapter..."
 docker compose exec -T app composer require league/flysystem-aws-s3-v3:"~1.0"
 
-# 4. 検証用ファイルのデプロイ
-echo "Deploying example files to 'src'..."
+# 5. ファイルデプロイ[cite: 12]
 cp EXAMPLES/web.php src/routes/web.php
 cp EXAMPLES/welcome.blade.php src/resources/views/welcome.blade.php
 
-# 5. Laravel側の .env 作成と AWS 設定の追記
-echo "Configuring Laravel .env with AWS settings..."
-cp src/.env.example src/.env
+# --- 追加手順 5.5: マイグレーションファイルの自動生成 ---
+echo "Generating migration for images table..."
+MIGRATION_FILE="src/database/migrations/$(date +%Y_%m_%d_%H%M%S)_create_images_table.php"
+cat <<'EOF' > "$MIGRATION_FILE"
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-# --- 6. Laravel側の .env 作成と AWS 設定の追記 ---
-echo "Configuring Laravel .env with AWS settings..."
-cp src/.env.example src/.env
+return new class extends Migration {
+    public function up()
+    {
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('file_name');
+            $table->string('s3_path');
+            $table->timestamps();
+        });
+    }
+    public function down() { Schema::dropIfExists('images'); }
+};
+EOF
 
-# 直接書き込まず、EXAMPLESにあるテンプレートを末尾に結合する
+# 6. 環境設定の修正[cite: 12]
+cp src/.env.example src/.env
+sed -i 's/DB_HOST=127.0.0.1/DB_HOST=db/g' src/.env
+sed -i 's/DB_DATABASE=laravel/DB_DATABASE=laravel_db/g' src/.env
+sed -i 's/DB_USERNAME=root/DB_USERNAME=user/g' src/.env
+sed -i 's/DB_PASSWORD=/DB_PASSWORD=password/g' src/.env
+
 if [ -f EXAMPLES/.env.laravel.example ]; then
     cat EXAMPLES/.env.laravel.example >> src/.env
-    echo "AWS settings appended from template."
-else
-    echo "Warning: EXAMPLES/.env.laravel.example not found."
 fi
 
-# 6. Laravelの初期化コマンド実行
-echo "Running Laravel initialization..."
-docker compose exec app php artisan key:generate
-docker compose exec app php artisan migrate:fresh
+# 7. 初期化[cite: 12]
+echo "Waiting 20 seconds for DB to wake up..."
+sleep 20
+docker compose exec -T app php artisan key:generate
+# ここで上記で作ったファイルが実行され、imagesテーブルが作られます
+docker compose exec -T app php artisan migrate:fresh --force
 
-# 7. LocalStackのバケット作成（念のため）
-echo "Creating S3 bucket in LocalStack..."
-docker compose exec aws awslocal s3 mb s3://my-test-bucket
-docker compose exec aws awslocal s3api put-bucket-acl --bucket my-test-bucket --acl public-read
-
-echo "--------------------------------------------------"
-echo "Setup complete! Ready to develop."
-echo "Access: http://localhost:8081"
-echo "--------------------------------------------------"
+# 8. S3バケット作成[cite: 12]
+docker compose exec -T aws awslocal s3 mb s3://my-test-bucket
