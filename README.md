@@ -27,7 +27,7 @@ $ cd LEMP_Laravel_test
 
 ```
 DB_DATABASE=laravel_db
-DB_USER=user 
+DB_USERNAME=user 
 DB_PASSWORD=password 
 DB_ROOT_PASSWORD=password
 
@@ -44,13 +44,13 @@ AWS_URL=http://localhost:4566/my-test-bucket
 ```
 
 3. コンテナの起動と自動インストール\
-ディレクトリのルートで以下のコマンドを実行してください。\
+ディレクトリのルートで以下のコマンドを実行してください。
 
 ```bash
 $ chmod +x setup.sh
 $ ./setup.sh
 ```
-powershellを使用する場合は、以下のコマンドを実行してください。
+windowsのターミナル、powershellを使用する場合は、以下のコマンドを実行してください。
 
 ```powershell
 $ sh setup.sh
@@ -87,6 +87,7 @@ $ sh setup.sh
 * ・**LocalStack**: LocalStack 3.4.0
 
 ## 7. 更新履歴
+* **2026-04-08**: s3バケットとデータベースの連携に成功
 * **2026-04-03**: setup.shの実装と自動化に成功
 * **2026-04-03**: LocalStackのバージョン固定/画像アップロード・削除機能実装
 * **2026-03-25**: Localstack+AWS環境を試験的に実装。
