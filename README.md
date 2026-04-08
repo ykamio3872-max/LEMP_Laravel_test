@@ -44,17 +44,23 @@ AWS_URL=http://localhost:4566/my-test-bucket
 ```
 
 3. コンテナの起動と自動インストール\
+- **For Mac/Linux**\
 ディレクトリのルートで以下のコマンドを実行してください。
 
 ```bash
 $ chmod +x setup.sh
 $ ./setup.sh
 ```
-windowsのターミナル、powershellを使用する場合は、以下のコマンドを実行してください。
+- **For Windows**\
+Windowsでは、Gitをインストールした際に一緒に導入される**Git Bash**を使用して実行することを推奨します。\
+     1.プロジェクトのルートディレクトリで右クリックし、**Git Bash Here**を選択します。\
+     2.以下のコマンドを実行してください。
 
-```powershell
+```bash
 $ sh setup.sh
 ```
+- [!NOTE]Windowsの標準コマンドプロンプトやPowerShell上で直接`./setup.sh`は動作しません。\
+必ず`Git Bash`または`WSL2`上のターミナルを使用してください。
 
 ## 4. 動作確認
 * **Webサイト**:`http://localhost:8081`(環境によりポートは異なります)
