@@ -6,22 +6,26 @@ Dockerを使用して構築したLEMP環境（Nginx, MySQL, PHP-FPM）上で、L
 ## ２．ディレクトリ構成
 ```
 .
-│  .env.example         #　ルートの.envの記載用テンプレート
+│  .env
+│  .env.example
 │  .gitattributes
 │  .gitignore
 │  docker-compose.yml
 │  README.md
-│  setup.sh             #　セットアップ用シェルファイル
-│
+│  setup.sh
+│  
 ├─docker
-│  ├─app
+│  ├─app     
 │  ├─aws
-│  ├─db
-│  └─web
-└─EXAMPLES
-        .env.laravel.example    #　Laravel用環境変数の転記用
-        web.php
-        welcome.blade.php
+│  ├─db    
+│  └─web        
+├─EXAMPLES
+│      .env.laravel.example
+│      web.php
+│      welcome.blade.php
+│      
+└─images
+        LEMP_Laravel_test.png
 ```
 
 ## ３．セットアップ手順
