@@ -102,9 +102,9 @@ $ sh setup.sh
 
 ## 7. 技術スタック
 * ・**Infrastructure**: Docker Compose
-* ・**Server**: Nginx(Web), PHP 8.1-fpm(App), MySQL 8.0(DB)
-* ・**Framework**: Laravel 8.x
-* ・**LocalStack**: LocalStack 3.4.0
+* **Server**: Nginx(Web), PHP 8.1-fpm(App), MySQL 8.0(DB)
+* **Framework**: Laravel 8.x
+* **LocalStack**: LocalStack 3.4.0
 
 ## 8. 更新履歴
 * **2026-04-10**: README更新、システム構成図追加。
