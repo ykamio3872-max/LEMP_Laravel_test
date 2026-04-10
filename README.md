@@ -84,7 +84,7 @@ $ sh setup.sh
 
 ## 5. システム構成図
 
-![システム構成図](images\LEMP_Laravel_test.drawio.png)
+![システム構成図](images/LEMP_Laravel_test.png)
 
 ## 6. トラブルシューティング・注意事項
 
