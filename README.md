@@ -6,8 +6,7 @@ Dockerを使用して構築したLEMP環境（Nginx, MySQL, PHP-FPM）上で、L
 ## ２．ディレクトリ構成
 ```
 .
-│  .env
-│  .env.example
+│  .env.example                 #   .envファイル作成用テンプレート
 │  .gitattributes
 │  .gitignore
 │  docker-compose.yml
@@ -20,8 +19,8 @@ Dockerを使用して構築したLEMP環境（Nginx, MySQL, PHP-FPM）上で、L
 │  ├─db    
 │  └─web        
 ├─EXAMPLES
-│      .env.laravel.example
-│      web.php
+│      .env.laravel.example     #   Laravelの.envへの転記用ファイル
+│      web.php                  #   EXAMPLESディレクトリ内のファイルはsetup.shで使います
 │      welcome.blade.php
 │      
 └─images
@@ -29,7 +28,7 @@ Dockerを使用して構築したLEMP環境（Nginx, MySQL, PHP-FPM）上で、L
 ```
 
 ## ３．セットアップ手順
-以下の手順を実行することで、ローカル環境にLaravelを立ち上げます。
+以下の手順を実行することで、ローカル環境にLaravel+LocalStack（S3, RDS）環境を立ち上げます。
 
 1. リポジトリのクローン
 ```
@@ -57,7 +56,7 @@ LOCALSTACK_SERVICES=s3,rds
 AWS_URL=http://localhost:4566/my-test-bucket
 ```
 
-3. コンテナの起動と自動インストール\
+3. コンテナの起動と自動インストール
 - **For Mac/Linux**\
 ディレクトリのルートで以下のコマンドを実行してください。
 
