@@ -105,7 +105,7 @@ $ sh setup.sh
     `composer install`が完了していない可能性があります。`$ docker compose exec app composer install`を手動で実行してください。
 
 ## 7. 技術スタック
-* ・**Infrastructure**: Docker Compose
+* **Infrastructure**: Docker Compose
 * **Server**: Nginx(Web), PHP 8.1-fpm(App), MySQL 8.0(DB)
 * **Framework**: Laravel 8.x
 * **LocalStack**: LocalStack 3.4.0
