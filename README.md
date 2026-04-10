@@ -82,7 +82,11 @@ $ sh setup.sh
 * **AWS動作確認**: http://localhost:8081/s3-upload-test \
     バケット作成に成功しているとjson形式で情報が表示されます。
 
-## 5. トラブルシューティング・注意事項
+## 5. システム構成図
+
+![システム構成図](images\LEMP_Laravel_test.drawio.png)
+
+## 6. トラブルシューティング・注意事項
 
 * **Q. `src`が空ではないというエラーでインストールが止まる**\
     Laravelの自動インストールは、`src`内に`artisan`ファイルがない場合のみ実行されます。`.gitkeep`などの隠しファイルが存在しても一時ディレクトリを経由してインストールされるよう `entrypoint.sh`で制御していますが、失敗する場合は一度`src`内を空にして再試行してください。
@@ -96,16 +100,17 @@ $ sh setup.sh
 * **Q. `vendor/autoload.php`がないというエラーが出る**\
     `composer install`が完了していない可能性があります。`$ docker compose exec app composer install`を手動で実行してください。
 
-## 6. 技術スタック
+## 7. 技術スタック
 * ・**Infrastructure**: Docker Compose
 * ・**Server**: Nginx(Web), PHP 8.1-fpm(App), MySQL 8.0(DB)
 * ・**Framework**: Laravel 8.x
 * ・**LocalStack**: LocalStack 3.4.0
 
-## 7. 更新履歴
-* **2026-04-08**: s3バケットとデータベースの連携に成功
-* **2026-04-03**: setup.shの実装と自動化に成功
-* **2026-04-03**: LocalStackのバージョン固定/画像アップロード・削除機能実装
+## 8. 更新履歴
+* **2026-04-10**: README更新、システム構成図追加。
+* **2026-04-08**: s3バケットとデータベースの連携に成功。
+* **2026-04-03**: setup.shの実装と自動化に成功。
+* **2026-04-03**: LocalStackのバージョン固定/画像アップロード・削除機能実装。
 * **2026-03-25**: Localstack+AWS環境を試験的に実装。
 * **2026-03-24**: `README.md`作成、クローンテストに成功。
 * **2026-03-23**: リポジトリ作成
