@@ -66,8 +66,8 @@ $ ./setup.sh
 ```
 - **For Windows**\
 Windowsでは、Gitをインストールした際に一緒に導入される**Git Bash**を使用して実行することを推奨します。\
-     1.プロジェクトのルートディレクトリで右クリックし、**Git Bash Here**を選択します。\
-     2.以下のコマンドを実行してください。
+     1. プロジェクトのルートディレクトリで右クリックし、**Git Bash Here**を選択します。\
+     2. 以下のコマンドを実行してください。
 
 ```bash
 $ sh setup.sh
@@ -82,7 +82,7 @@ $ sh setup.sh
     $ docker compose exec db mysql -u root -p
     ```
     パスワードは`.env`で指定した`DB_ROOT_PASSWORD`が必要です。
-* **AWS動作確認**: http://localhost:8081/s3-upload-test \
+* **AWS動作確認**: `http://localhost:8081/s3-upload-test` \
     バケット作成に成功しているとjson形式で情報が表示されます。
 
 ## 5. システム構成図
